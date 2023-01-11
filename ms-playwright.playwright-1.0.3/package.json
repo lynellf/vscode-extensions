@@ -1,0 +1,143 @@
+{
+	"name": "playwright",
+	"displayName": "Playwright Test for VSCode",
+	"description": "Run Playwright Test tests in Visual Studio Code.",
+	"icon": "images/playwright-logo.png",
+	"version": "1.0.3",
+	"publisher": "ms-playwright",
+	"repository": "https://github.com/microsoft/playwright-vscode",
+	"bugs": {
+		"url": "https://github.com/microsoft/playwright-vscode/issues"
+	},
+	"engines": {
+		"vscode": "^1.65.0"
+	},
+	"categories": [
+		"Testing"
+	],
+	"activationEvents": [
+		"workspaceContains:**/*playwright*.config.{ts,js,mjs}",
+		"onCommand:pw.extension.install"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"category": "Test",
+				"command": "pw.extension.install",
+				"title": "Install Playwright"
+			},
+			{
+				"category": "Test",
+				"command": "pw.extension.installBrowsers",
+				"title": "Install Playwright Browsers"
+			},
+			{
+				"category": "Test",
+				"command": "pw.extension.command.inspect",
+				"title": "Pick locator"
+			},
+			{
+				"category": "Test",
+				"command": "pw.extension.command.closeBrowsers",
+				"title": "Close all Playwright browsers"
+			},
+			{
+				"category": "Test",
+				"command": "pw.extension.command.recordNew",
+				"icon": "$(record)",
+				"title": "Record new"
+			},
+			{
+				"category": "Test",
+				"command": "pw.extension.command.recordAtCursor",
+				"icon": "$(record)",
+				"title": "Record at cursor"
+			},
+			{
+				"category": "Test",
+				"command": "pw.extension.toggle.reuseBrowser",
+				"title": "Toggle Playwright Browser Reuse"
+			}
+		],
+		"configuration": {
+			"title": "Playwright",
+			"properties": {
+				"playwright.env": {
+					"type": "object",
+					"default": {},
+					"description": "Environment variables to pass to Playwright Test."
+				},
+				"playwright.reuseBrowser": {
+					"type": "boolean",
+					"default": false,
+					"description": "Show & reuse browser between tests."
+				}
+			}
+		},
+		"views": {
+			"test": [
+				{
+					"type": "webview",
+					"id": "pw.extension.settingsView",
+					"name": "Playwright"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"esbuild": "esbuild ./src/babelBundle.ts ./src/extension.ts ./src/oopReporter.ts ./src/debugTransform.ts --bundle --outdir=out --external:vscode --external:./babelBundle --external:./debugTransform --external:./oopReporter --format=cjs --platform=node --target=ES2019",
+		"build": "npm run esbuild -- --minify",
+		"watch": "npm run esbuild -- --sourcemap --watch",
+		"vscode:prepublish": "npm run build",
+		"lint": "tsc && eslint . --ext .ts,.tsx,.js",
+		"download-api": "vscode-dts dev && vscode-dts main",
+		"test": "playwright test",
+		"package": "vsce package",
+		"code": "code --uninstall-extension ms-playwright.playwright && code --install-extension playwright-0.2.11.vsix",
+		"uncode": "code --uninstall-extension ms-playwright.playwright",
+		"code-insiders": "code-insiders --uninstall-extension ms-playwright.playwright && code-insiders --install-extension playwright-0.2.11.vsix",
+		"uncode-insiders": "code-insiders --uninstall-extension ms-playwright.playwright"
+	},
+	"devDependencies": {
+		"@playwright/test": "1.29",
+		"@types/babel__core": "^7.1.20",
+		"@types/babel__helper-plugin-utils": "^7.10.0",
+		"@types/babel__traverse": "^7.18.2",
+		"@types/glob": "^8.0.0",
+		"@types/node": "^18.11.9",
+		"@types/stack-utils": "^2.0.1",
+		"@types/which": "^2.0.1",
+		"@types/ws": "^8.5.3",
+		"@typescript-eslint/eslint-plugin": "^5.44.0",
+		"@typescript-eslint/parser": "^5.44.0",
+		"esbuild": "^0.15.15",
+		"eslint": "^8.28.0",
+		"eslint-plugin-notice": "^0.9.10",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"glob": "^8.0.3",
+		"typescript": "^4.9.3",
+		"vsce": "^2.14.0",
+		"vscode-dts": "^0.3.3"
+	},
+	"dependencies": {
+		"@babel/core": "^7.20.2",
+		"@babel/helper-plugin-utils": "^7.20.2",
+		"@babel/parser": "^7.20.3",
+		"@babel/traverse": "^7.20.1",
+		"stack-utils": "^2.0.6",
+		"which": "^3.0.0",
+		"ws": "^8.11.0"
+	},
+	"__metadata": {
+		"id": "f53b1d43-eef4-4909-99ca-56b5fa3e108c",
+		"publisherId": "43a584fb-6d7a-4782-ae52-15ee5fde9bab",
+		"publisherDisplayName": "Microsoft",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"updated": false,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1673446120066,
+		"preRelease": false
+	}
+}
